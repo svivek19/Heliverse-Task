@@ -6,6 +6,7 @@ import Ratings from "./components/Ratings";
 import PurchaseSection from "./components/PurchaseSection";
 import SectionAndPage from "./components/SectionAndPage";
 import SupportedPage from "./components/SupportedPage";
+import Features from "./components/Features";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
       <PurchaseSection />
       <SectionAndPage />
       <SupportedPage />
+      <Features />
     </>
   );
 };
