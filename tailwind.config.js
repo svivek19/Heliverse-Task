@@ -5,6 +5,7 @@ export default {
     extend: {
       backgroundImage: {
         "gradient-text": "linear-gradient(90deg, #F87516 0%, #5E11FF 100%)",
+        "gradient-image": "linear-gradient(90deg, #F87516 0%, #5E11FF 100%)",
       },
     },
   },
