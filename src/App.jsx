@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import Ratings from "./components/Ratings";
 import PurchaseSection from "./components/PurchaseSection";
 import SectionAndPage from "./components/SectionAndPage";
+import SupportedPage from "./components/SupportedPage";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Ratings />
       <PurchaseSection />
       <SectionAndPage />
+      <SupportedPage />
     </>
   );
 };
