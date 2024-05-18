@@ -4,10 +4,10 @@ const Hero = () => {
   return (
     <div className="pt-10 w-5/6 mx-auto flex">
       <div className="flex flex-col space-y-3">
-        <h5 className="w-2/3 text-transparent bg-clip-text bg-gradient-text text-lg font-medium font-outfit">
+        <h5 className="w-[60%] text-transparent bg-clip-text bg-gradient-text text-lg font-medium font-outfit">
           Transform Your Website
         </h5>
-        <p className="text-slate-300 w-2/3 text-lg font-outfit">
+        <p className="text-slate-300 w-[60%] text-lg font-outfit">
           With Motion Art Effect
         </p>
       </div>
