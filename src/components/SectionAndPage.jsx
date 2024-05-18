@@ -10,8 +10,8 @@ const SectionAndPage = () => {
         <h3>For Whole Page</h3>
       </div>
 
-      <div className="my-16 flex justify-between space-x-8">
-        <div className="bg-[#0F0821] w-3/6 px-8 py-6 flex flex-col space-y-6 border border-slate-800 rounded-2xl">
+      <div className="my-16 md:flex justify-between md:space-x-8">
+        <div className="bg-[#0F0821] md:w-3/6 px-8 py-6 flex flex-col space-y-6 border border-slate-800 rounded-2xl">
           <h4 className="font-sora text-slate-200 text-2xl">
             Apply On Section
           </h4>
@@ -22,7 +22,7 @@ const SectionAndPage = () => {
           <img src={section} alt="" />
         </div>
 
-        <div className="bg-[#0F0821] mt-16 w-3/6 px-8 py-6 flex flex-col space-y-6 border border-slate-800 rounded-2xl">
+        <div className="bg-[#0F0821] mt-8 md:mt-16 md:w-3/6 px-8 py-6 flex flex-col space-y-6 border border-slate-800 rounded-2xl">
           <h4 className="font-sora text-slate-200 text-2xl">Apply On Page</h4>
           <p className="font-outfit text-slate-400">
             Take your website to new heights with Motion Art for Elementor.

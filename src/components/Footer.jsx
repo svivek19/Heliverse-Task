@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bg-gradient-image text-slate-200 p-4 flex justify-between">
+    <div className="bg-gradient-image text-slate-200 p-4 flex flex-col-reverse md:flex-row justify-between">
       <p className="font-sora text-xs">
         © {new Date().getFullYear()} svivek19. All rights reserved by
         Vivekananthan S

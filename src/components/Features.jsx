@@ -28,7 +28,7 @@ const details = [
 const Features = () => {
   return (
     <div className="w-11/12 mx-auto my-20">
-      <div className="flex justify-between space-x-5">
+      <div className="flex flex-col md:flex-row justify-between space-x-0 md:space-x-5 space-y-5 md:space-y-0">
         {details.map((data) => (
           <div
             key={data.id}

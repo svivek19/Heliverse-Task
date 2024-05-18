@@ -9,11 +9,11 @@ const images = [img1, img2, img3];
 const Ratings = () => {
   return (
     <div className="my-32 w-11/12 mx-auto text-center">
-      <div className="text-xl text-slate-200 font-outfit">
+      <div className="text-2xl md:text-xl text-slate-200 font-outfit">
         <h4>Trusted by thousands of users around the world</h4>
       </div>
 
-      <div className="flex justify-between my-16">
+      <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 justify-between my-16 items-center">
         {images.map((img, index) => (
           <div key={index}>
             <div className="flex items-center space-x-3">
