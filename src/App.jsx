@@ -7,6 +7,7 @@ import PurchaseSection from "./components/PurchaseSection";
 import SectionAndPage from "./components/SectionAndPage";
 import SupportedPage from "./components/SupportedPage";
 import Features from "./components/Features";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
       <SectionAndPage />
       <SupportedPage />
       <Features />
+      <Footer />
     </>
   );
 };
