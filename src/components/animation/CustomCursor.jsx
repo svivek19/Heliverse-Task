@@ -1,68 +1,160 @@
-import React, { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import "./CustomCursor.css";
+import React, { useRef, useEffect } from "react";
+import "../../App.css";
 
 const CustomCursor = () => {
-  const cursorRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const canvasRef = useRef(null);
+  let balls = [];
+  const rgb = [
+    "rgb(26, 188, 156)",
+    "rgb(46, 204, 113)",
+    "rgb(52, 152, 219)",
+    "rgb(155, 89, 182)",
+    "rgb(241, 196, 15)",
+    "rgb(230, 126, 34)",
+    "rgb(231, 76, 60)",
+  ];
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      gsap.to(cursorRef.current, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.1,
-        ease: "power3.out",
-      });
-      setIsVisible(true);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    const resizeReset = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
 
-    const handleMouseEnter = () => {
-      gsap.to(cursorRef.current, {
-        scale: 1.5,
-        duration: 0.3,
-        ease: "power3.out",
-      });
+    const getRandomInt = (min, max) =>
+      Math.round(Math.random() * (max - min)) + min;
+
+    const easeOutQuart = (x) => 1 - Math.pow(1 - x, 4);
+
+    class Ball {
+      constructor() {
+        this.start = {
+          x: mouse.x + getRandomInt(-20, 20),
+          y: mouse.y + getRandomInt(-20, 20),
+          size: getRandomInt(30, 40),
+        };
+        this.amplitude = getRandomInt(20, 50);
+        this.period = getRandomInt(50, 100);
+        this.xOffset = Math.random() * Math.PI * 2;
+        this.yOffset = Math.random() * Math.PI * 2;
+
+        this.x = this.start.x;
+        this.y = this.start.y;
+        this.size = this.start.size;
+
+        this.style = rgb[getRandomInt(0, rgb.length - 1)];
+        this.gradient = this.createGradient();
+
+        this.time = 0;
+        this.ttl = 120;
+      }
+
+      createGradient() {
+        const gradient = ctx.createRadialGradient(
+          this.x,
+          this.y,
+          0,
+          this.x,
+          this.y,
+          this.size
+        );
+        gradient.addColorStop(0, this.style);
+        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+        return gradient;
+      }
+
+      draw() {
+        ctx.fillStyle = this.gradient;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      update() {
+        if (this.time <= this.ttl) {
+          let progress = 1 - (this.ttl - this.time) / this.ttl;
+
+          this.size = this.start.size * (1 - easeOutQuart(progress));
+          this.x =
+            this.start.x +
+            Math.sin((this.time + this.xOffset) / this.period) * this.amplitude;
+          this.y =
+            this.start.y +
+            Math.cos((this.time + this.yOffset) / this.period) * this.amplitude;
+          this.gradient = this.createGradient();
+        }
+        this.time++;
+      }
+    }
+
+    const mouse = {
+      x: undefined,
+      y: undefined,
     };
 
-    const handleMouseLeave = () => {
-      gsap.to(cursorRef.current, {
-        scale: 1,
-        duration: 0.3,
-        ease: "power3.out",
-      });
+    const mousemove = (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+
+      for (let i = 0; i < 3; i++) {
+        balls.push(new Ball());
+      }
     };
 
-    const handleMouseStop = () => {
-      setIsVisible(false); // Set isVisible to false when mouse stops moving
+    const mouseout = () => {
+      mouse.x = undefined;
+      mouse.y = undefined;
     };
 
-    document.addEventListener("mousemove", handleMouseMove);
-    document.querySelectorAll("a, button").forEach((el) => {
-      el.addEventListener("mouseenter", handleMouseEnter);
-      el.addEventListener("mouseleave", handleMouseLeave);
-    });
+    const animationLoop = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = "lighter";
+      drawBalls();
 
-    let timeout;
-    document.addEventListener("mousemove", () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(handleMouseStop, 500);
-    });
+      let temp = [];
+      for (let i = 0; i < balls.length; i++) {
+        if (balls[i].time <= balls[i].ttl) {
+          temp.push(balls[i]);
+        }
+      }
+      balls = temp;
+
+      requestAnimationFrame(animationLoop);
+    };
+
+    const drawBalls = () => {
+      for (let i = 0; i < balls.length; i++) {
+        balls[i].update();
+        balls[i].draw();
+      }
+    };
+
+    const init = () => {
+      resizeReset();
+      animationLoop();
+    };
+
+    init();
+    window.addEventListener("resize", resizeReset);
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseout", mouseout);
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.querySelectorAll("a, button").forEach((el) => {
-        el.removeEventListener("mouseenter", handleMouseEnter);
-        el.removeEventListener("mouseleave", handleMouseLeave);
-      });
+      window.removeEventListener("resize", resizeReset);
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseout", mouseout);
     };
   }, []);
 
   return (
-    <div
-      className={`custom-cursor ${isVisible ? "visible" : "hidden"}`}
-      ref={cursorRef}
-    ></div>
+    <canvas
+      ref={canvasRef}
+      id="canvas"
+      style={{ position: "fixed", top: 0, left: 0, zIndex: -1 }}
+    />
   );
 };
 
