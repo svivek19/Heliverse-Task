@@ -8,10 +8,12 @@ import SectionAndPage from "./components/SectionAndPage";
 import SupportedPage from "./components/SupportedPage";
 import Features from "./components/Features";
 import Footer from "./components/Footer";
+import CustomCursor from "./components/animation/CustomCursor";
 
 const App = () => {
   return (
     <>
+      <CustomCursor />
       <Navbar />
       <Header />
       <Hero />
